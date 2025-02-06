@@ -1,0 +1,60 @@
+/* login page design */
+.login-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    min-height: 100vh;
+    min-width: 100vw;
+    /*width: 50%;
+    margin: auto;
+    margin-top: 5%;
+    padding: 3%; */
+    background: linear-gradient(to bottom, rgba(163, 161, 161, 0.5), rgba(71, 71, 71, 0.5)), url('../images/loginBg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    gap: 1px;
+
+    .login-details1 {
+        border-top-left-radius: 2rem;
+        border-bottom-left-radius: 2rem;
+    }
+
+    .login-details2 {
+        border-top-right-radius: 2rem;
+        border-bottom-right-radius: 2rem;
+    }
+
+    .login-details1, .login-details2 {
+        background-color: #ffffffbd;
+        border: 1px solid #ffffffbd;
+        box-sizing: border-box;
+        height: 30em;
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: center;
+        gap: 2rem;
+        padding: 1.7rem;
+
+        #login {
+            font-size: 1.9rem;
+            font-weight: 600;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+
+        .form-check {
+            display: flex;
+            flex-direction: row;
+            gap: 7rem;
+
+            span {
+                display: flex;
+                gap: 2px;
+            }
+        }
+    }
+}
