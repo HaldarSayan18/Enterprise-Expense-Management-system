@@ -15,24 +15,28 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    gap: 1px;
+    /* gap: 1px; */
+    border: none;
 
     .login-details1 {
         border-top-left-radius: 2rem;
         border-bottom-left-radius: 2rem;
+        border-right: none;
     }
 
     .login-details2 {
         border-top-right-radius: 2rem;
         border-bottom-right-radius: 2rem;
+        border-left: none;
     }
 
-    .login-details1, .login-details2 {
+    .login-details1,
+    .login-details2 {
         background-color: #ffffffbd;
         border: 1px solid #ffffffbd;
         box-sizing: border-box;
         height: 30em;
-        width: 30%;
+        width: 25%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -40,21 +44,81 @@
         gap: 2rem;
         padding: 1.7rem;
 
-        #login {
+        #login1,
+        #login2 {
             font-size: 1.9rem;
             font-weight: 600;
             font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
         }
 
+        #login1 {
+            margin-left: 100%;
+        }
+
+        #login2 {
+            margin-right: 100%;
+        }
+
         .form-check {
             display: flex;
             flex-direction: row;
-            gap: 7rem;
+            gap: 2rem;
 
             span {
                 display: flex;
                 gap: 2px;
             }
+        }
+    }
+}
+
+/* registration page design */
+.register-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    margin: auto;
+    min-height: 100vh;
+    min-width: 100vw;
+    background: linear-gradient(to bottom, rgba(163, 161, 161, 0.9), rgba(71, 71, 71, 0.5)), url('../images/loginBg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+
+    #section-image {
+        height: 30em;
+        width: 30%;
+        background-image: url('../images/loginBg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-clip: border-box;
+    }
+
+    #section-content {
+        background-color: #fff;
+        height: 30em;
+        width: 40%;
+        /* padding-top: 1%; */
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+        justify-content: space-around;
+    }
+
+    .user-details {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.2rem;
+
+        #register {
+            font-size: 1.9rem;
+            font-weight: 600;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
         }
     }
 }

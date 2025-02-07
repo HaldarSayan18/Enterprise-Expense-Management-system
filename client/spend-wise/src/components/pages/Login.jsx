@@ -14,23 +14,23 @@ const Login = () => {
         <Box className="login-container">
             {/* login with */}
             <Box className="login-details1">
-                <p id='login'> Sign Up</p>
+                <p id='login1'> Sign</p>
                 {/* <Divider /> */}
-                    <Button variant="outlined" href='#' startIcon={<GoogleIcon />} sx={{
+                    <Button variant="outlined" href='/login' startIcon={<GoogleIcon />} sx={{
                         width: "95%",
                         height: "10%",
                         borderRadius: "10px"
                     }}>
                         Sign in with Google
                     </Button>
-                <Button variant="outlined" href='#' startIcon={<FacebookIcon />} sx={{
+                <Button variant="outlined" href='/login' startIcon={<FacebookIcon />} sx={{
                     width: "95%",
                     height: "10%",
                     borderRadius: "10px"
                 }}>
                     Sign in with Facebook
                 </Button>
-                <Button variant="outlined" href='#' startIcon={<EmailIcon />} sx={{
+                <Button variant="outlined" href='/login' startIcon={<EmailIcon />} sx={{
                     width: "95%",
                     height: "10%",
                     borderRadius: "10px"
@@ -39,13 +39,13 @@ const Login = () => {
                 </Button>
                 <Box className="policy">
                     <span>
-                        By signing up, you agree to the <a href='#'>terms & conditions</a> of the service and acknowledge our <a href='#'>private policy</a>.
+                        By signing up, you agree to the <a href='/login'>terms & conditions</a> of the service and acknowledge our <a href='/login'>private policy</a>.
                     </span>
                 </Box>
             </Box>
             {/* login */}
             <Box className="login-details2">
-                <p id='login'> Sign In</p>
+                <p id='login2'>In</p>
                 {/* <Divider /> */}
                 <TextField
                     type='text'
@@ -73,7 +73,7 @@ const Login = () => {
                             Remember me
                         </label>
                     </span>
-                    <a href='#'>forgot password?</a>
+                    <a href='/login'>forgot password?</a>
                 </Box>
                 <Box className="">
 
