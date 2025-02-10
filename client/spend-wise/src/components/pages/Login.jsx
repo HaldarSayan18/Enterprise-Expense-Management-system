@@ -96,6 +96,7 @@ const Login = () => {
             <Box className="login-details1">
                 <p id='login1'> Sign</p>
                 {/* <Divider /> */}
+                {/* google */}
                 <Button variant="outlined" href='/login' startIcon={<GoogleIcon />} sx={{
                     width: "95%",
                     height: "10%",
@@ -103,6 +104,7 @@ const Login = () => {
                 }}>
                     Sign in with Google
                 </Button>
+                {/* facebook */}
                 <Button variant="outlined" href='/login' startIcon={<FacebookIcon />} sx={{
                     width: "95%",
                     height: "10%",
@@ -110,6 +112,7 @@ const Login = () => {
                 }}>
                     Sign in with Facebook
                 </Button>
+                {/* email */}
                 <Button variant="outlined" href='/login' startIcon={<EmailIcon />} sx={{
                     width: "95%",
                     height: "10%",
