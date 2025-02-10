@@ -9,9 +9,14 @@ import LoginIcon from '@mui/icons-material/Login';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import EmailIcon from '@mui/icons-material/Email';
-import { FormControl } from '@mui/material';
+import { FormControl, IconButton, InputAdornment } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const Login = () => {
+    const [showPassword, setShowPassword] = useState(false);
+    const [errors, setErrors] = useState({});
+
     const [loginData, setLoginData] = useState({
         id: '',
         password: ''
@@ -33,7 +38,7 @@ const Login = () => {
 
         if (!loginData.id) {
             tempErrors.id = "Employee ID is required.";
-            toast.error(tempErrors.id, { position: "top-right" });
+            // toast.error(tempErrors.id, { position: "top-right" });
         } else if (loginData.id.length < 3) {
             tempErrors.id = "Enter id properly.";
             // toast.error(tempErrors.id, { position: "top-right" });
@@ -42,7 +47,7 @@ const Login = () => {
         }
         if (!loginData.password) {
             tempErrors.password = "Password is required.";
-            toast.error(tempErrors.password, { position: "top-right" });
+            // toast.error(tempErrors.password, { position: "top-right" });
         } else if (loginData.password.length < 8) {
             tempErrors.password = "Password length must be more than 8.";
             // toast.error(tempErrors.password, { position: "top-right" });
@@ -78,7 +83,11 @@ const Login = () => {
         }
     };
 
-    const [errors, setErrors] = useState({});
+    // Toggle password visibility
+    const handleShowPassword = () => {
+        setShowPassword((prevShow) => !prevShow);
+    };
+
     return (
         <Box className="login-container">
             <ToastContainer />
@@ -130,13 +139,13 @@ const Login = () => {
                     value={loginData.id}
                     onChange={handleChange}
                     error={Boolean(errors.id)}
-                    // helperText={errors.id}
+                    helperText={errors.id}
                     sx={{ width: "95%" }}
                 />
 
                 {/* password */}
                 <TextField
-                    type='password'
+                    type={showPassword ? 'text' : 'password'}
                     id="outlined-required2"
                     label="Password"
                     placeholder="Enter your password"
@@ -144,8 +153,21 @@ const Login = () => {
                     value={loginData.password}
                     onChange={handleChange}
                     error={Boolean(errors.password)}
-                    // helperText={errors.password}
+                    helperText={errors.password}
                     sx={{ width: "95%" }}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleShowPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }}
                 />
                 <Button variant="contained" type='submit' endIcon={<LoginIcon />} sx={{ width: "95%" }}>
                     Sign in

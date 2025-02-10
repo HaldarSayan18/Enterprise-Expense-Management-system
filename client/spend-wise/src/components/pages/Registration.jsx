@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import "../assets/styles/Page.css";
-import { Box, Button, FormControl } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+// material ui components
+import { Box, Button, FormControl, IconButton, InputAdornment } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import TextField from '@mui/material/TextField';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import { Link, useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const Registration = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   const [focusedField, setFocusedField] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   // validation
   const [formData, setFormData] = useState({
@@ -126,6 +130,11 @@ const Registration = () => {
     }
   };
 
+  // Toggle password visibility
+  const handleShowPassword = () => {
+    setShowPassword((prevShow) => !prevShow);
+  };
+
   return (
     <Box className="register-container">
       <ToastContainer />
@@ -227,7 +236,7 @@ const Registration = () => {
             <Grid size={4.8}>
               <TextField
                 fullWidth
-                type='password'
+                type={showPassword ? 'text' : 'password'}
                 name='password'
                 value={formData.password}
                 required
@@ -239,6 +248,19 @@ const Registration = () => {
                 onBlur={handleBlur}
                 error={Boolean(errors.password)}
                 helperText={focusedField === 'password' && errors.password ? errors.password : ''}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleShowPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
               />
             </Grid>
 
@@ -246,7 +268,7 @@ const Registration = () => {
             <Grid size={4.8}>
               <TextField
                 fullWidth
-                type='password'
+                type={showPassword ? 'text' : 'password'}
                 name='rePassword'
                 value={formData.rePassword}
                 required
@@ -258,6 +280,19 @@ const Registration = () => {
                 onBlur={handleBlur}
                 error={Boolean(errors.rePassword)}
                 helperText={focusedField === 'rePassword' && errors.rePassword ? errors.rePassword : ''}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleShowPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
               />
             </Grid>
           </Grid>
