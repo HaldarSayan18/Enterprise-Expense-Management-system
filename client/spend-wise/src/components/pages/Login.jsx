@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../assets/styles/Page.css";
+import { toast, ToastContainer } from 'react-toastify';
 // material ui & bootstrap
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -12,7 +13,7 @@ import { FormControl } from '@mui/material';
 
 const Login = () => {
     const [loginData, setLoginData] = useState({
-        id:'',
+        id: '',
         password: ''
     });
 
@@ -32,15 +33,19 @@ const Login = () => {
 
         if (!loginData.id) {
             tempErrors.id = "Employee ID is required.";
+            toast.error(tempErrors.id, { position: "top-right" });
         } else if (loginData.id.length < 3) {
             tempErrors.id = "Enter id properly.";
+            // toast.error(tempErrors.id, { position: "top-right" });
         } else if (loginData.id.length > 3) {
             tempErrors.id = "";
         }
         if (!loginData.password) {
             tempErrors.password = "Password is required.";
+            toast.error(tempErrors.password, { position: "top-right" });
         } else if (loginData.password.length < 8) {
             tempErrors.password = "Password length must be more than 8.";
+            // toast.error(tempErrors.password, { position: "top-right" });
         } else if (loginData.password.length >= 8) {
             tempErrors.password = ""
         }
@@ -48,12 +53,20 @@ const Login = () => {
         return Object.keys(tempErrors).every((key) => !tempErrors[key]);
     };
 
+    // Automatically validate when form data changes
+    useEffect(() => {
+        const isValid = validateLogin();
+    }, [loginData]);
+
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validateLogin()) {
             console.log("Form Data Submitted:", loginData);
-            alert("Login successful!");
+            toast.success(`Logged in successfully.`, {
+                position: "top-center",
+                autoClose: 2000,
+            });
             // Clear the form (optional)
             setLoginData({
                 id: '',
@@ -68,6 +81,8 @@ const Login = () => {
     const [errors, setErrors] = useState({});
     return (
         <Box className="login-container">
+            <ToastContainer />
+
             {/* login with */}
             <Box className="login-details1">
                 <p id='login1'> Sign</p>
@@ -99,10 +114,12 @@ const Login = () => {
                     </span>
                 </Box>
             </Box>
+
             {/* login */}
             <FormControl component='form' className="login-details2" onSubmit={handleSubmit}>
                 <p id='login2'>In</p>
                 {/* <Divider /> */}
+                {/* employee id */}
                 <TextField
                     type='text'
                     autoComplete='off'
@@ -113,9 +130,11 @@ const Login = () => {
                     value={loginData.id}
                     onChange={handleChange}
                     error={Boolean(errors.id)}
-                    helperText={errors.id}
+                    // helperText={errors.id}
                     sx={{ width: "95%" }}
                 />
+
+                {/* password */}
                 <TextField
                     type='password'
                     id="outlined-required2"
@@ -125,7 +144,7 @@ const Login = () => {
                     value={loginData.password}
                     onChange={handleChange}
                     error={Boolean(errors.password)}
-                    helperText={errors.password}
+                    // helperText={errors.password}
                     sx={{ width: "95%" }}
                 />
                 <Button variant="contained" type='submit' endIcon={<LoginIcon />} sx={{ width: "95%" }}>

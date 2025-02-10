@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../assets/styles/Page.css";
 import { Box, Button, FormControl } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import TextField from '@mui/material/TextField';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import { Link } from 'react-router-dom';
-// import {toast, ToastContainer}from 'react-toastify'
+import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Registration = () => {
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [focusedField, setFocusedField] = useState('');
+
   // validation
   const [formData, setFormData] = useState({
     id: '',
@@ -15,17 +20,16 @@ const Registration = () => {
     email: '',
     mobile: '',
     password: '',
-    rePassword: ''
+    rePassword: '',
+    isChecked: false
   });
-  const [errors, setErrors] = useState({});
 
   // Handle input changes
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    // Update form data
+    const { name, value, type, checked } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
@@ -41,7 +45,7 @@ const Registration = () => {
       tempErrors.id = "";
     }
     if (!formData.fullName) {
-      tempErrors.fullName = "Employee fullName is required.";
+      tempErrors.fullName = "Employee Full Name is required.";
     } else if (formData.fullName.length <= 5) {
       tempErrors.fullName = "Employee fullName must be more than 5 characters.";
     } else {
@@ -78,21 +82,44 @@ const Registration = () => {
     return Object.keys(tempErrors).every((key) => !tempErrors[key]);
   };
 
+  // Handle focus on inputs
+  const handleFocus = (field) => {
+    setFocusedField(field);
+  };
+
+  // Handle blur to remove focus
+  const handleBlur = () => {
+    setFocusedField('');
+  };
+
+  // Automatically validate when form data changes
+  useEffect(() => {
+    const isValid = validate();
+    setIsFormValid(isValid && formData.isChecked);
+  }, [formData]);
+
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validate()) {
+    if (validate() && formData.isChecked) {
       console.log("Form Data Submitted:", formData);
-      alert("Registration successful!");
-      // Clear the form (optional)
-      setFormData({
-        id: '',
-        fullName: '',
-        email: '',
-        mobile: '',
-        password: '',
-        rePassword: ''
+      toast.success(`${formData.fullName} have registered successfully.`, {
+        position: "top-center",
+        autoClose: 2000,
       });
+      setTimeout(() => {
+        navigate('/login');
+        // reset the form data
+        setFormData({
+          id: '',
+          fullName: '',
+          email: '',
+          mobile: '',
+          password: '',
+          rePassword: '',
+          isChecked: false
+        });
+      }, 2000);
       setErrors({});
     } else {
       console.log("Validation failed.");
@@ -101,7 +128,7 @@ const Registration = () => {
 
   return (
     <Box className="register-container">
-      {/* <ToastContainer/> */}
+      <ToastContainer />
       <Box id="section-image"></Box>
       <Box id="section-content">
         {/* login option */}
@@ -114,7 +141,7 @@ const Registration = () => {
         </Box>
         {/* create account */}
         <FormControl className="user-details" component='form' noValidate onSubmit={handleSubmit}>
-          <p id='register'>Create an Acocunt</p>
+          <p id='register'>Create an Account</p>
           <Grid container spacing={1} sx={{
             display: "flex",
             justifyContent: "center",
@@ -130,8 +157,10 @@ const Registration = () => {
               label="Employee Id"
               value={formData.id}
               onChange={handleChange}
+              onFocus={() => handleFocus('id')}
+              onBlur={handleBlur}
               error={Boolean(errors.id)}
-              // helperText={errors.id}
+              helperText={focusedField === 'id' && errors.id ? errors.id : ''}
 
               sx={{ width: "79%" }}
             />
@@ -149,15 +178,18 @@ const Registration = () => {
                 label="Email id"
                 placeholder="Enter your email"
                 onChange={handleChange}
+                onFocus={() => handleFocus('email')}
+                onBlur={handleBlur}
                 error={Boolean(errors.email)}
-              // helperText={errors.email}
+                helperText={focusedField === 'email' && errors.email ? errors.email : ''}
               />
             </Grid>
+
             {/* mobile */}
             <Grid size={4}>
               <TextField
                 fullWidth
-                type='text'
+                type='tel'
                 name='mobile'
                 autoComplete='off'
                 value={formData.mobile}
@@ -166,10 +198,13 @@ const Registration = () => {
                 label="Contact number"
                 placeholder="Enter your phone number"
                 onChange={handleChange}
+                onFocus={() => handleFocus('mobile')}
+                onBlur={handleBlur}
                 error={Boolean(errors.mobile)}
-              // helperText={errors.mobile}
+                helperText={focusedField === 'mobile' && errors.mobile ? errors.mobile : ''}
               />
             </Grid>
+
             {/* name */}
             <TextField
               type='text'
@@ -182,9 +217,12 @@ const Registration = () => {
               placeholder="Enter your full name"
               sx={{ width: "79%" }}
               onChange={handleChange}
+              onFocus={() => handleFocus('fullName')}
+              onBlur={handleBlur}
               error={Boolean(errors.fullName)}
-              // helperText={errors.fullName}
+              helperText={focusedField === 'fullName' && errors.fullName ? errors.fullName : ''}
             />
+
             {/* password */}
             <Grid size={4.8}>
               <TextField
@@ -197,10 +235,13 @@ const Registration = () => {
                 label="Password"
                 placeholder="Enter your password"
                 onChange={handleChange}
+                onFocus={() => handleFocus('password')}
+                onBlur={handleBlur}
                 error={Boolean(errors.password)}
-                // helperText={errors.password}
+                helperText={focusedField === 'password' && errors.password ? errors.password : ''}
               />
             </Grid>
+
             {/* re-password */}
             <Grid size={4.8}>
               <TextField
@@ -213,18 +254,22 @@ const Registration = () => {
                 label="Re-type Password"
                 placeholder="Confirm your password"
                 onChange={handleChange}
+                onFocus={() => handleFocus('rePassword')}
+                onBlur={handleBlur}
                 error={Boolean(errors.rePassword)}
-                // helperText={errors.rePassword}
+                helperText={focusedField === 'rePassword' && errors.rePassword ? errors.rePassword : ''}
               />
             </Grid>
           </Grid>
+          {/* check-box */}
           <Box className="form-check">
-            <input className="form-check-input" type="checkbox" name='check' defaultChecked id="flexCheckDefault" />
+            <input className="form-check-input" type="checkbox" name='isChecked' checked={formData.isChecked} id="flexCheckDefault" onChange={handleChange} />
             <label className="form-check-label" htmlFor="flexCheckDefault">
               By clicking you agree our <a href='/register'>Terms of use</a> and <a href='/register'>Policies</a>.
             </label>
           </Box>
-          <Button type='submit' variant="contained" startIcon={<ExitToAppIcon />} sx={{ width: "80%" }}>
+          {/* submit button */}
+          <Button id='submitBtn' type='submit' variant="contained" disabled={!isFormValid} startIcon={<ExitToAppIcon />} sx={{ width: "80%" }}>
             Register
           </Button>
         </FormControl>
