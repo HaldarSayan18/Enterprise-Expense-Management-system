@@ -198,6 +198,7 @@ const Registration = () => {
             <Grid size={4}>
               <TextField
                 fullWidth
+                max={10}
                 type='tel'
                 name='mobile'
                 autoComplete='off'
@@ -280,19 +281,6 @@ const Registration = () => {
                 onBlur={handleBlur}
                 error={Boolean(errors.rePassword)}
                 helperText={focusedField === 'rePassword' && errors.rePassword ? errors.rePassword : ''}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleShowPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                      </IconButton>
-                    </InputAdornment>
-                  )
-                }}
               />
             </Grid>
           </Grid>

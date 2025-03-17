@@ -12,6 +12,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import { FormControl, IconButton, InputAdornment } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -172,9 +173,11 @@ const Login = () => {
                         )
                     }}
                 />
-                <Button variant="contained" type='submit' endIcon={<LoginIcon />} sx={{ width: "95%" }}>
-                    Sign in
-                </Button>
+                <Link to="/">
+                    <Button variant="contained" type='submit' endIcon={<LoginIcon />} sx={{ width: "100%" }}>
+                        Sign in
+                    </Button>
+                </Link>
                 <Box className="form-check">
                     <span>
                         <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
